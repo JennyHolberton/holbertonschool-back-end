@@ -3,27 +3,31 @@
 A Python script that, for a given employee ID,
 returns information about their TODO list progress
 """
+
 import requests
 import json
 import sys
 
-employee_id = sys.argv[1]
-todo_response = requests.get(f'https://jsonplaceholder.typicode.com/users/{employee_id}/todos')
-todos = todo_response.json()
+if __name__ == "__main__":
+    employee_id = sys.argv[1]
+    url = 'https://jsonplaceholder.typicode.com/users/'
 
-user_response = requests.get(f'https://jsonplaceholder.typicode.com/users/{employee_id}')
-user = user_response.json()
-employee_name = user['username']
+    todo_response = requests.get(url + f'{employee_id}/todos')
+    todos = todo_response.json()
 
-total_tasks = len(todos)
-completed_tasks = 0
-task_titles = []
+    user_response = requests.get(url + f'{employee_id}')
+    user = user_response.json()
+    name = user['username']
 
-for todo in todos:
-    if todo['completed']:
-        completed_tasks = completed_tasks + 1
-        task_titles.append(todo['title'])
+    total_tasks = len(todos)
+    com_tasks = 0
+    task_titles = []
 
-print(f'Employee {employee_name} is done with tasks({completed_tasks}/{total_tasks}):')
-for titles in task_titles:
-    print(f'\t {titles}')
+    for todo in todos:
+        if todo['completed']:
+            com_tasks = com_tasks + 1
+            task_titles.append(todo['title'])
+
+    print(f'Employee {name} is done with tasks({com_tasks}/{total_tasks}):')
+    for titles in task_titles:
+        print(f'\t {titles}')
