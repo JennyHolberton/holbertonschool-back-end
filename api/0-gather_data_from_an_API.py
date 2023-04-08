@@ -4,8 +4,8 @@ A Python script that, for a given employee ID,
 returns information about their TODO list progress
 """
 
-import requests
 import json
+import requests
 import sys
 
 if __name__ == "__main__":
@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     user_response = requests.get(url + f'{employee_id}')
     user = user_response.json()
-    name = user['username']
+    name = user['name']
 
     total_tasks = len(todos)
     com_tasks = 0
